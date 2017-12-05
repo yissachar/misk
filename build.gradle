@@ -21,7 +21,11 @@ ext {
           loggingImpl: 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1',
           jacksonDatabind: 'com.fasterxml.jackson.core:jackson-databind:2.9.2',
           jacksonDataformatYaml: 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.2',
-          jacksonKotlin: 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2'
+          jacksonKotlin: 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2',
+          commonProtos: "com.google.api.grpc:proto-google-common-protos:1.0.0",
+          grpcNetty: 'io.grpc:grpc-netty:1.8.0',
+          grpcProtobuf: 'io.grpc:grpc-protobuf:1.8.0',
+          grpcStub: 'io.grpc:grpc-stub:1.8.0',
   ]
 
   isCi = "true".equals(System.getenv('CI'))
@@ -36,10 +40,31 @@ subprojects {
 
     dependencies {
       classpath dep.kotlinGradlePlugin
+      classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
     }
   }
   repositories {
     mavenCentral()
     jcenter()
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+
+protobuf {
+  protoc {
+    artifact = 'com.google.protobuf:protoc:3.5.0'
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:1.8.0"
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
   }
 }

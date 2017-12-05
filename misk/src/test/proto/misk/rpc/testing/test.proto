@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "misk.rpc.testing";
+option java_outer_classname = "Testing";
+option java_multiple_files = true;
+option generate_java_services = truw;
+
+message Ping {
+  string message = 1;
+}
+
+message Pong {
+  string message = 2;
+}
+
+service PingPong {
+  rpc Ping(Ping) returns (Pong) {}
+}

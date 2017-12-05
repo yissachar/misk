@@ -5,7 +5,7 @@ import misk.Interceptor
 import misk.web.actions.WebAction
 import kotlin.reflect.KFunction
 
-internal class RealChain(
+internal class WebChain(
     private val _action: WebAction,
     private val _args: List<Any?>,
     private val interceptors: List<Interceptor>,
@@ -24,7 +24,7 @@ internal class RealChain(
 
     override fun proceed(args: List<Any?>): Any? {
         check(index < interceptors.size) { "final interceptor must be terminal" }
-        val next = RealChain(_action, args, interceptors, function, index + 1)
+        val next = WebChain(_action, args, interceptors, function, index + 1)
         return interceptors[index].intercept(next)
     }
 }

@@ -33,6 +33,9 @@ dependencies {
   compile dep.jacksonDatabind
   compile dep.jacksonDataformatYaml
   compile dep.jacksonKotlin
+  compile dep.grpcNetty
+  compile dep.grpcProtobuf
+  compile dep.grpcStub
 
   testCompile dep.junit
   testCompile dep.truth

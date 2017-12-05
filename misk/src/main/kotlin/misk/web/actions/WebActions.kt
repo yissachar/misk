@@ -3,7 +3,7 @@ package misk.web.actions
 import com.google.common.collect.Lists
 import misk.Chain
 import misk.Interceptor
-import misk.web.RealChain
+import misk.web.WebChain
 import kotlin.reflect.KFunction
 
 fun WebAction.asChain(
@@ -17,5 +17,5 @@ fun WebAction.asChain(
             return function.call(chain.action, *chain.args.toTypedArray())
         }
     })
-    return RealChain(this, args, interceptors, function, 0)
+    return WebChain(this, args, interceptors, function, 0)
 }
